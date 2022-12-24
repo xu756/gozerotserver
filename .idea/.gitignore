@@ -7,4 +7,9 @@
 /dataSources/
 /dataSources.local.xml
 /.idea/
+/*/*.log
+# 忽略所有的 .iml 文件
+/*.xml
+/*.log
+*/temp/
 
