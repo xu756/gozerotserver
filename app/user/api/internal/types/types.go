@@ -6,8 +6,11 @@ type UserLogin struct {
 	Password string `json:"password"`
 }
 
-type Res struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data interface{} `json:"data"`
+type UserLoginres struct {
+	Token string `json:"token"`
+}
+
+type UserInfo struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
