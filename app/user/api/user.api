@@ -13,10 +13,12 @@ type (
 		Username string `json:"username"`
 		Password string `json:"password"`
 	}
-	Res {
-		Code int         `json:"code"`
-		Msg  string      `json:"msg"`
-		Data interface{} `json:"data"`
+	userLoginres {
+		Token string `json:"token"`
+	}
+	userInfo {
+		Username string `json:"username"`
+		Password string `json:"password"`
 	}
 )
 @server(
@@ -25,7 +27,7 @@ type (
 service user-api {
 	@doc "用户登录"
 	@handler userLogin
-	post /login (userLogin) returns (Res)
+	post /login (userLogin) returns (userLoginres)
 }
 
 @server(
@@ -35,5 +37,5 @@ service user-api {
 service user-api {
 	@doc "用户信息"
 	@handler userInfo
-	get /info returns (Res)
+	get /info returns (userInfo)
 }
