@@ -23,11 +23,13 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 	}
 }
 
-func (l *UserInfoLogic) UserInfo() (resp *types.Res, err error) {
-
-	return &types.Res{
-		Code: 200,
-		Msg:  "success",
-		Data: l.ctx.Value("user"),
+func (l *UserInfoLogic) UserInfo() (resp *types.UserInfo, err error) {
+	user, err := l.svcCtx.UserModel.FindOneByname(l.ctx, l.ctx.Value("user").(string))
+	if err != nil {
+		return nil, err
+	}
+	return &types.UserInfo{
+		Username: user.Username,
+		Password: user.Password,
 	}, nil
 }
