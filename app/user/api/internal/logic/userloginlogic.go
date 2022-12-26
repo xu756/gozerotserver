@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/golang-jwt/jwt/v4"
 	"gozerotserver/app/user/model"
+	"gozerotserver/common/errorx"
 	"time"
 
 	"gozerotserver/app/user/api/internal/svc"
@@ -36,13 +37,11 @@ func (l *UserLoginLogic) getJwtToken(secretKey string, iat int64, seconds int64,
 }
 func (l *UserLoginLogic) UserLogin(req *types.UserLogin) (resp *types.UserLoginres, err error) {
 	_, er := l.svcCtx.UserModel.Insert(l.ctx, &model.User{
-		Username:   req.Username,
-		Password:   req.Password,
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
+		Username: req.Username,
+		Password: req.Password,
 	})
 	if er != nil {
-		return nil, er
+		return nil, errorx.NewCodeError(1001, "插入失败")
 	}
 	now := time.Now().Unix()
 	jwtToken, e := l.getJwtToken(l.svcCtx.Config.Auth.AccessSecret, now, l.svcCtx.Config.Auth.AccessExpire, req.Username)
